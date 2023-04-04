@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intro</title>
+    <link rel="stylesheet" href="theme.css">
+    <style>
+        [v-cloak] {
+            display: none  ;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="root" v-cloak>
+    <div class="container pt-5">
+        <div class="card">
+            <h1 class="center" :style="{
+                color: inputValue.length > 3 ? '#e53935' : 'green'
+            }">
+                {{ title }}
+            </h1>
+            <div class="form-control">
+                <label>
+                    <input type="text"
+                           :placeholder="placeholder"
+                           v-bind:value="inputValue"
+                           v-model="inputValue"
+                           v-on:keypress.enter="addNewNote"
+                    />
+                </label>
+            </div>
+            <button class="btn" v-on:click="addNewNote">Добавить</button>
+            <hr>
+
+            <ul class="list" v-if="notes.length !== 0">
+                <li class="list-item" v-for="(myNote, idx) in notes">
+                    <span>{{myNote}}</span>
+                    <div class="btns">
+                        <button class="btn danger" v-on:click="deleteNote(idx)">delete</button>
+                        <button class="btn primary" v-on:click="archiveNote(idx)" >archive</button>
+                    </div>
+                </li>
+            </ul>
+            <div v-else="notes.length === 0 ">Заметок пока нет добавьте новую</div>
+            <h2 :style="{textAlign: 'center', color: 'grey'}">Архив</h2>
+            <ul class="list">
+                <li class="list-item" v-for="(myArchive, idx) in archive ">
+                    <span>{{ myArchive }}</span>
+                    <button class="btn grey" v-on:click="archiveDel(idx)">delete</button>
+                </li>
+            </ul>
+            <p :style="{
+                textAlign: 'center'
+            }">
+                <strong>Общее количество: {{ notes.length }}</strong> | В архиве: {{ archive.length }}
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
